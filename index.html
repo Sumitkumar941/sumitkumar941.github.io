@@ -5,7 +5,7 @@
     <title>System Access | Md Amirul Hoda (পলাশ)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; padding: 20px; overflow-x: hidden; }
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; padding: 20px; overflow-x: hidden; height: 100vh; }
         #terminal { font-size: 1.2rem; line-height: 1.5; margin-bottom: 20px; }
         .hidden { display: none; }
         .hero { text-align: center; padding: 50px 0; }
@@ -17,11 +17,9 @@
 </head>
 <body>
 
-    <!-- হ্যাকিং টার্মিনাল -->
-    <div id="terminal"></div>
+    <div id="terminal">CLICK ANYWHERE TO INITIALIZE SYSTEM...</div>
     <audio id="hackSound" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg"></audio>
 
-    <!-- মূল পোর্টফোলিও (শুরুতে লুকানো থাকবে) -->
     <div id="portfolio" class="hidden">
         <section class="hero">
             <h1>Md Amirul Hoda (পলাশ)</h1>
@@ -41,17 +39,19 @@
         const audio = document.getElementById('hackSound');
 
         function startHack() {
-            if (i < text.length) {
-                terminal.innerHTML += text[i] + "<br>";
-                audio.play().catch(e => console.log("Click required"));
-                i++;
-                setTimeout(startHack, 1000);
-            } else {
-                terminal.style.display = 'none';
-                document.getElementById('portfolio').classList.remove('hidden');
-            }
+            terminal.innerHTML = ""; 
+            let timer = setInterval(() => {
+                if (i < text.length) {
+                    terminal.innerHTML += text[i] + "<br>";
+                    audio.play().catch(e => console.log(e));
+                    i++;
+                } else {
+                    clearInterval(timer);
+                    terminal.style.display = 'none';
+                    document.getElementById('portfolio').classList.remove('hidden');
+                }
+            }, 1000);
         }
-        // ইউজার একবার ক্লিক করলেই হ্যাকিং শুরু হবে (ব্রাউজার পলিসির জন্য)
         document.body.onclick = () => { startHack(); document.body.onclick = null; };
     </script>
 </body>
