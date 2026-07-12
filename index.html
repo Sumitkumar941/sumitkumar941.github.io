@@ -2,57 +2,54 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>System Access | Md Amirul Hoda (পলাশ)</title>
+    <title>SECURE TERMINAL | Md Amirul Hoda (পলাশ)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; padding: 20px; overflow-x: hidden; height: 100vh; }
-        #terminal { font-size: 1.2rem; line-height: 1.5; margin-bottom: 20px; }
-        .hidden { display: none; }
-        .hero { text-align: center; padding: 50px 0; }
-        h1 { color: #0f0; font-size: 2.5rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
-        .card { background: #111; padding: 20px; border-radius: 15px; text-decoration: none; color: #0f0; text-align: center; border: 1px solid #0f0; transition: 0.4s; }
-        .card:hover { transform: scale(1.05); background: #002200; }
+        body { 
+            margin: 0; padding: 0; overflow: hidden; height: 100vh;
+            background: url('https://i.ibb.co/C0VdYy6/hacker-img.jpg') no-repeat center center fixed; /* এখানে তোমার ছবির সরাসরি লিংক বসানো হয়েছে */
+            background-size: cover;
+            font-family: 'Courier New', monospace;
+        }
+        #canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        #overlay { position: relative; z-index: 2; text-align: center; padding-top: 10%; }
+        h1 { color: #0f0; text-shadow: 2px 2px 5px #000; font-size: 2rem; }
+        .menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 400px; margin: 30px auto; }
+        .btn { border: 1px solid #0f0; padding: 12px; color: #0f0; text-decoration: none; background: rgba(0,0,0,0.8); font-weight: bold; }
+        .btn:hover { background: #0f0; color: #000; }
     </style>
 </head>
 <body>
 
-    <div id="terminal">CLICK ANYWHERE TO INITIALIZE SYSTEM...</div>
-    <audio id="hackSound" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg"></audio>
-
-    <div id="portfolio" class="hidden">
-        <section class="hero">
-            <h1>Md Amirul Hoda (পলাশ)</h1>
-            <p>AI Specialist | Prompt Engineer</p>
-        </section>
-        <div class="grid">
-            <a href="https://www.linkedin.com/in/mohammed-amirul-islam-720119401" class="card"><i class="fab fa-linkedin"></i> <h3>LinkedIn</h3></a>
-            <a href="https://www.upwork.com/freelancers/~012072c3d002cb852a" class="card"><i class="fab fa-upwork"></i> <h3>Upwork</h3></a>
-            <a href="https://www.fiverr.com/s/ljqoXVQ" class="card"><i class="fab fa-fiverr"></i> <h3>Fiverr</h3></a>
+    <canvas id="canvas"></canvas>
+    <div id="overlay">
+        <h1>ACCESS GRANTED: POLASH</h1>
+        <div class="menu">
+            <a href="https://www.linkedin.com/in/mohammed-amirul-islam-720119401" class="btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://www.upwork.com/freelancers/~012072c3d002cb852a" class="btn"><i class="fab fa-upwork"></i> Upwork</a>
+            <a href="https://www.fiverr.com/s/ljqoXVQ" class="btn"><i class="fab fa-fiverr"></i> Fiverr</a>
+            <a href="https://x.com/mdamirulhoda" class="btn"><i class="fab fa-twitter"></i> Twitter</a>
         </div>
     </div>
 
     <script>
-        const text = ["Initializing System...", "Accessing Neural Network...", "Decrypting Protocols...", "Welcome: Md Amirul Hoda (পলাশ)", "System Ready."];
-        let i = 0;
-        const terminal = document.getElementById('terminal');
-        const audio = document.getElementById('hackSound');
-
-        function startHack() {
-            terminal.innerHTML = ""; 
-            let timer = setInterval(() => {
-                if (i < text.length) {
-                    terminal.innerHTML += text[i] + "<br>";
-                    audio.play().catch(e => console.log(e));
-                    i++;
-                } else {
-                    clearInterval(timer);
-                    terminal.style.display = 'none';
-                    document.getElementById('portfolio').classList.remove('hidden');
-                }
-            }, 1000);
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const drops = Array(Math.floor(canvas.width / 20)).fill(1);
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f0';
+            drops.forEach((y, i) => {
+                const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+                ctx.fillText(text, i * 20, y * 20);
+                if (y * 20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
         }
-        document.body.onclick = () => { startHack(); document.body.onclick = null; };
+        setInterval(draw, 50);
     </script>
 </body>
 </html>
